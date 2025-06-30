@@ -66,3 +66,60 @@ For example, for a route from City A to City B with a DOJ on *30-Jan-2025*, your
 
 ---
 
+
+## 🧠 Approach & Insights
+
+### 📊 Data Analysis Insights
+
+* The `transactions.csv` file was the core dataset, containing all relevant historical booking data.
+* Only data available **15-30 days before the date of journey (DOJ)** was used for training, in line with the prediction requirement.
+* There are **100 unique routes** with training data spanning **21 months**.
+* **Higher tier source cities** tend to have higher `final_seatcount`.
+* **Intra-state travel** was more common than inter-state.
+* **Weekends (Friday to Sunday)** saw higher average bookings.
+* **Tier 3 → Tier 1** routes had the most filled seats.
+* Top 20–30 routes by seat count were mostly during **holiday periods or long weekends**.
+* The **day of ticket booking** (`doi`) had no significant impact and was dropped.
+
+---
+
+### 🔧 Feature Engineering
+
+#### ✅ Features That Helped
+
+* **Tier-based ratios**: Mapping seat count averages by tier combinations.
+* **Region-based averages**: Final seat count averaged over region pairs.
+* **Route-level stats**: Added mean, max, std based on `srcid-destid` pairs.
+* **Holiday features**: Encoded if DOJ falls on a holiday or long weekend.
+* **Late booking indicator**: Flag to indicate if no booking occurred between 30–15 days before DOJ.
+* **Daily delta features**: Daily booking and search counts derived from `cumsum_seatcount` and `cumsum_searchcount`.
+
+#### ❌ Features That Didn't Help
+
+* **Search-to-seat ratio**
+* **Averages based on tier only (ignoring region)**
+* **Slope feature** from curve-fitting `cumsum_seatcount`
+
+---
+
+### 🤖 Models Tested
+
+* Random Forest ✅ *(Best performer with lowest RMSE)*
+* XGBoost
+* LightGBM
+* CatBoost
+* LSTM
+* Ensemble models
+
+---
+
+## 🏁 Final Performance
+
+* 📉 **Best RMSE:** `679` on the test set
+* 🏆 **Leaderboard Rank:** **#226 out of \~830 teams**
+* 📸 **Snapshot:**
+
+![Leaderboard Position](./d6190d46-ff23-4f48-b1c6-cd8593a601f0.png)
+
+---
+
