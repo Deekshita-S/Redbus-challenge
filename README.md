@@ -4,6 +4,8 @@
 
 The objective of this hackathon is to **forecast seat demand for bus journeys** at the route level, exactly **15 days before the actual date of journey (DOJ)**.
 
+Link to challenge - [Redbus data decode hackathon](https://www.analyticsvidhya.com/datahack/contest/redbus-data-decode-hackathon-2025/)
+
 ### 🔍 Problem Overview
 
 Demand for bus journeys is affected by a wide range of factors such as:
